@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3BD0CB132BA2256700277F31 /* WorldOfPAYBACKAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD0CB122BA2256700277F31 /* WorldOfPAYBACKAppApp.swift */; };
-		3BD0CB152BA2256700277F31 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD0CB142BA2256700277F31 /* ContentView.swift */; };
 		3BD0CB172BA2256900277F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BD0CB162BA2256900277F31 /* Assets.xcassets */; };
 		3BD0CB1A2BA2256900277F31 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BD0CB192BA2256900277F31 /* Preview Assets.xcassets */; };
 		3BD0CB242BA2256900277F31 /* WorldOfPAYBACKAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD0CB232BA2256900277F31 /* WorldOfPAYBACKAppTests.swift */; };
 		3BD0CB2E2BA2256900277F31 /* WorldOfPAYBACKAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD0CB2D2BA2256900277F31 /* WorldOfPAYBACKAppUITests.swift */; };
 		3BD0CB302BA2256900277F31 /* WorldOfPAYBACKAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD0CB2F2BA2256900277F31 /* WorldOfPAYBACKAppUITestsLaunchTests.swift */; };
 		3BD0CB3D2BA225B700277F31 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3BD0CB3C2BA225B700277F31 /* README.md */; };
+		3BD0CB402BA228B700277F31 /* PaybackPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 3BD0CB3F2BA228B700277F31 /* PaybackPackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		3BD0CB0F2BA2256700277F31 /* WorldOfPAYBACKApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldOfPAYBACKApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BD0CB122BA2256700277F31 /* WorldOfPAYBACKAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldOfPAYBACKAppApp.swift; sourceTree = "<group>"; };
-		3BD0CB142BA2256700277F31 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3BD0CB162BA2256900277F31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BD0CB192BA2256900277F31 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3BD0CB1F2BA2256900277F31 /* WorldOfPAYBACKAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorldOfPAYBACKAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3BD0CB402BA228B700277F31 /* PaybackPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +81,7 @@
 				3BD0CB222BA2256900277F31 /* WorldOfPAYBACKAppTests */,
 				3BD0CB2C2BA2256900277F31 /* WorldOfPAYBACKAppUITests */,
 				3BD0CB102BA2256700277F31 /* Products */,
+				3BD0CB3E2BA228B700277F31 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				3BD0CB122BA2256700277F31 /* WorldOfPAYBACKAppApp.swift */,
-				3BD0CB142BA2256700277F31 /* ContentView.swift */,
 				3BD0CB162BA2256900277F31 /* Assets.xcassets */,
 				3BD0CB182BA2256900277F31 /* Preview Content */,
 			);
@@ -130,6 +130,13 @@
 			path = WorldOfPAYBACKAppUITests;
 			sourceTree = "<group>";
 		};
+		3BD0CB3E2BA228B700277F31 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -146,6 +153,9 @@
 			dependencies = (
 			);
 			name = WorldOfPAYBACKApp;
+			packageProductDependencies = (
+				3BD0CB3F2BA228B700277F31 /* PaybackPackage */,
+			);
 			productName = WorldOfPAYBACKApp;
 			productReference = 3BD0CB0F2BA2256700277F31 /* WorldOfPAYBACKApp.app */;
 			productType = "com.apple.product-type.application";
@@ -261,7 +271,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BD0CB152BA2256700277F31 /* ContentView.swift in Sources */,
 				3BD0CB132BA2256700277F31 /* WorldOfPAYBACKAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,6 +601,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3BD0CB3F2BA228B700277F31 /* PaybackPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PaybackPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3BD0CB072BA2256700277F31 /* Project object */;
 }

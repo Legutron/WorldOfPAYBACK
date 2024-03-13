@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import PaybackPackage
 
 @main
 struct WorldOfPAYBACKAppApp: App {
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+		WindowGroup {
+			PaybackApp()
+		}
     }
 }
