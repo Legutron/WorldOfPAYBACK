@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Localization
 
 public struct PaybackApp: View {
 	public init() {}
@@ -15,7 +16,7 @@ public struct PaybackApp: View {
 			Image(systemName: "globe")
 				.imageScale(.large)
 				.foregroundStyle(.tint)
-			Text("Hello, world!")
+			Text(L10n.`init`)
 		}
 		.padding()
 	}

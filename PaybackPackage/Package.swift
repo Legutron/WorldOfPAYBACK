@@ -27,14 +27,24 @@ let package = Package(
 		.package(
 			url: "https://github.com/pointfreeco/swift-composable-architecture",
 			from: "1.8.0"
+		),
+		.package(
+			url: "https://github.com/SwiftGen/SwiftGenPlugin",
+			from: "6.6.0"
 		)
 	],
 	targets: [
 		.target(
-			name: "PaybackPackage"),
+			name: "PaybackPackage",
+			dependencies: [
+				"Localization"
+			]
+		),
 		.testTarget(
 			name: "PaybackPackageTests",
-			dependencies: ["PaybackPackage"]
+			dependencies: [
+				"PaybackPackage"
+			]
 		),
 		.target(
 			name: "Common",
@@ -53,6 +63,9 @@ let package = Package(
 			dependencies: [],
 			resources: [
 				.process("Resources"),
+			],
+			plugins: [
+				.plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
 			]
 		),
 	]
