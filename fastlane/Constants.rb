@@ -1,0 +1,8 @@
+# Set by build environment
+# FL_HOCKEY_API_TOKEN
+# SUMO_KEYCHAIN_PASSWORD
+# SLACK_URL - set the hook URL in the CircleCI environment
+
+# PO EDITOR
+POEDITOR_API_TOKEN = ENV['SUMO_POEDITOR_API_KEY'] || '0cf95be4987a696a220ecb039777fef8'
+POEDITOR_PROJECT_ID = '689564'
