@@ -12,7 +12,12 @@ let package = Package(
 	products: [
 		.library(
 			name: "PaybackPackage",
-			targets: ["PaybackPackage"]),
+			targets: ["PaybackPackage"])
+		,
+		.library(
+			name: "Common",
+			targets: ["Common"])
+		,
 	],
 	dependencies: [
 		.package(
@@ -25,6 +30,19 @@ let package = Package(
 			name: "PaybackPackage"),
 		.testTarget(
 			name: "PaybackPackageTests",
-			dependencies: ["PaybackPackage"]),
+			dependencies: ["PaybackPackage"]
+		),
+		.target(
+			name: "Common",
+			dependencies: [
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			],
+			resources: [
+				.process("Resources"),
+			]
+		),
 	]
 )
