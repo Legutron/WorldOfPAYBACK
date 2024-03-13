@@ -1,4 +1,11 @@
 # PAYBACK Coding Challenge
+by Jakub Legut 2024
+
+## Tech Stack
+Architecture: `TCA (1.9.2)`
+UI: `SwiftUI`
+`SPM | SwiftGen | Fastlane`
+Localization: `POEditor (with fastlane integration)`
 
 A new App named **WorldOfPAYBACK** is planned to be released. One of its first features involves displaying a list of transactions, and a corresponding detail screen for each.
 
