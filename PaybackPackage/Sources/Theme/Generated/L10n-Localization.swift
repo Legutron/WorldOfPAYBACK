@@ -14,6 +14,14 @@ public enum L10n {
   ///  * Exported from POEditor - https://poeditor.com
   ///  ******************************************************************************
   public static let `init` = L10n.tr("Localizable", "init", fallback: "init")
+  /// All
+  public static let transactionListDefaultCategory = L10n.tr("Localizable", "transaction_list_default_category", fallback: "All")
+  /// selected
+  public static let transactionListSelectedLabel = L10n.tr("Localizable", "transaction_list_selected_label", fallback: "selected")
+  /// Sum
+  public static let transactionListSum = L10n.tr("Localizable", "transaction_list_sum", fallback: "Sum")
+  /// Transaction List
+  public static let transactionListTitle = L10n.tr("Localizable", "transaction_list_title", fallback: "Transaction List")
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

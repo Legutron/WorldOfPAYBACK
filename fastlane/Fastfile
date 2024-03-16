@@ -27,8 +27,8 @@ desc "Update Localization strings from POEditor"
 lane :appStrings do
   Dir.chdir("..") do
   UI.message "Fetching localization files from POEditor.com..."
-  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l en -i 'PaybackPackage/Sources/Localization/Resources/en.lproj/Localizable.strings'")
-  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l de -i 'PaybackPackage/Sources/Localization/Resources/de.lproj/Localizable.strings'")
-  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l pl -i 'PaybackPackage/Sources/Localization/Resources/pl.lproj/Localizable.strings'")
+  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l en -i 'PaybackPackage/Sources/Theme/Resources/en.lproj/Localizable.strings'")
+  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l de -i 'PaybackPackage/Sources/Theme/Resources/de.lproj/Localizable.strings'")
+  sh("poesie -t #{POEDITOR_API_TOKEN} -p #{POEDITOR_PROJECT_ID} -l pl -i 'PaybackPackage/Sources/Theme/Resources/pl.lproj/Localizable.strings'")
   end
 end

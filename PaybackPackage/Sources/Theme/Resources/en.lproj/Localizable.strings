@@ -1,0 +1,12 @@
+/*******************************************************************************
+ * Exported from POEditor - https://poeditor.com
+ *******************************************************************************/
+
+"init" = "init";
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Transaction
+"transaction_list_default_category" = "All";
+"transaction_list_selected_label" = "selected";
+"transaction_list_sum" = "Sum";
+"transaction_list_title" = "Transaction List";

@@ -1,11 +1,39 @@
 # PAYBACK Coding Challenge
-by Jakub Legut 2024
 
-## Tech Stack
-Architecture: `TCA (1.9.2)`
-UI: `SwiftUI`
-`SPM | SwiftGen | Fastlane`
-Localization: `POEditor (with fastlane integration)`
+## 👨 Author
+### Jakub Legut
+ - [LinkedIn](https://www.linkedin.com/in/jakub-legut/)
+
+## 🛠 Tech stack
+- [Xcode](https://developer.apple.com/xcode/)
+- [Swift](https://swift.org/)
+- [SwiftGen](https://github.com/SwiftGen/SwiftGen)
+- [Fastlane](https://github.com/fastlane/fastlane)
+- [ComposableArchitecture](https://github.com/pointfreeco/swift-composable-architecture)
+
+```
+                                           +-----------+                                            
+                                           |  WorldO   |                                            
+                                           +-----------+                                            
+                                                 |                                                  
+                                                 |                                                  
+                                             BioCamApp                                              
++--------------------------------------------------------------------------------------------------+
+|                                          +-----------+                                           |
+|                      +-------------------| BioCamApp |-------------------+                       |
+|                      |                   +-----------+                   |                       |
+|                      |                                                   |                       |
+|                +-----|-----+                                       +-----------+                 |
+|        +------ | CoreLogic |-------+                       +-------|    UI     |-------+         |
+|        |       +-----------+       |                       |       +-----------+       |         |
+|        |             |             |                       |             |             |         |
+|  +-----------+ +-----|-----+ +-----------+           +-----------+ +-----|-----+ +-----------+   |
+|  |  Logic A  | |  Logic B  | |  Logic C  |           | Feature A | | Feature B | | Feature C |   |
+|  +-----------+ +-----------+ +-----------+           +-----------+ +-----------+ +-----------+   |
+|                                                                                                  |
++--------------------------------------------------------------------------------------------------+
+```
+diagram source: `https://textik.com/#4b4a1a71380180ee`
 
 A new App named **WorldOfPAYBACK** is planned to be released. One of its first features involves displaying a list of transactions, and a corresponding detail screen for each.
 

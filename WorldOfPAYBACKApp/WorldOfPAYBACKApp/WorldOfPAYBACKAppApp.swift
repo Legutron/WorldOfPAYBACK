@@ -12,7 +12,7 @@ import PaybackPackage
 struct WorldOfPAYBACKAppApp: App {
     var body: some Scene {
 		WindowGroup {
-			PaybackApp()
+			liveApp
 		}
     }
 }

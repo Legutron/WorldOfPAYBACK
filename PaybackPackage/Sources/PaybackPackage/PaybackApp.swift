@@ -6,18 +6,27 @@
 //
 
 import SwiftUI
-import Localization
+import Common
+import ComposableArchitecture
+import TransactionFeature
+import Theme
 
-public struct PaybackApp: View {
-	public init() {}
-	
-	public var body: some View {
-		VStack {
-			Image(systemName: "globe")
-				.imageScale(.large)
-				.foregroundStyle(.tint)
-			Text(L10n.`init`)
-		}
-		.padding()
+public let liveApp = TransactionListView(
+	store: Store(
+		initialState: initialTransactionListView
+	) {
+		TransactionList()
+			.signpost()
+			._printChanges()
 	}
-}
+)
+
+let initialTransactionListView: TransactionList.State = .init(
+	translations: .init(
+		title: L10n.transactionListTitle,
+		defaultCategoryLabel: L10n.transactionListDefaultCategory,
+		sumLabel: L10n.transactionListSum,
+		selectedLabel: L10n.transactionListSelectedLabel
+	),
+	transactions: .init(uniqueElements: [.mock1, .mock2, .mock3])
+)

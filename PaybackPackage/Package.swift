@@ -15,12 +15,16 @@ let package = Package(
 			targets: ["PaybackPackage"]
 		),
 		.library(
+			name: "TransactionFeature",
+			targets: ["TransactionFeature"]
+		),
+		.library(
 			name: "Common",
 			targets: ["Common"]
 		),
 		.library(
-			name: "Localization",
-			targets: ["Localization"]
+			name: "Theme",
+			targets: ["Theme"]
 		),
 	],
 	dependencies: [
@@ -37,7 +41,9 @@ let package = Package(
 		.target(
 			name: "PaybackPackage",
 			dependencies: [
-				"Localization"
+				"Common",
+				"Theme",
+				"TransactionFeature"
 			]
 		),
 		.testTarget(
@@ -47,19 +53,33 @@ let package = Package(
 			]
 		),
 		.target(
-			name: "Common",
+			name: "TransactionFeature",
 			dependencies: [
+				"Common",
 				.product(
 					name: "ComposableArchitecture",
 					package: "swift-composable-architecture"
 				),
-			],
-			resources: [
-				.process("Resources"),
+			]
+		),
+		.testTarget(
+			name: "TransactionFeatureTests",
+			dependencies: [
+				"TransactionFeature"
 			]
 		),
 		.target(
-			name: "Localization",
+			name: "Common",
+			dependencies: [
+				"Theme",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.target(
+			name: "Theme",
 			dependencies: [],
 			resources: [
 				.process("Resources"),
