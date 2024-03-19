@@ -25,8 +25,10 @@ public enum Asset {
   public static let background = ColorAsset(name: "background")
   public static let primary = ColorAsset(name: "primary")
   public static let surface = ColorAsset(name: "surface")
+  public static let warning = ColorAsset(name: "warning")
   public static let textPrimary = ColorAsset(name: "text_primary")
   public static let textSecondary = ColorAsset(name: "text_secondary")
+  public static let textWarning = ColorAsset(name: "text_warning")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

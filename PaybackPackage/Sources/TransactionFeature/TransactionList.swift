@@ -22,6 +22,7 @@ public struct TransactionList {
 		var selectedCategory: Category
 		
 		var isLoading: Bool = false
+		var isErrorActive: Bool = false
 		
 		var sum: Double {
 			// assuming it's the same currency
@@ -78,6 +79,7 @@ public struct TransactionList {
 		public enum ViewAction {
 			case onAppear
 			case categoryChanged(Category)
+			case errorRetryTapped
 		}
 		
 		public enum LogicAction {
@@ -94,6 +96,7 @@ public struct TransactionList {
 	public init() {}
 	
 	@Dependency(\.transaction) var env
+	@Dependency(\.continuousClock) var clock
 	
 	public var body: some Reducer<State, Action> {
 		Reduce { state, action in
@@ -105,6 +108,8 @@ public struct TransactionList {
 				case .categoryChanged(let category):
 					state.selectedCategory = category
 					return .send(.logic(.filterByCategory))
+				case .errorRetryTapped:
+					return .send(.logic(.fetchTransaction))
 				}
 				
 			case let .logic(action):
@@ -120,8 +125,10 @@ public struct TransactionList {
 						return .none
 					}
 				case .fetchTransaction:
+					state.isErrorActive = false
 					state.isLoading = true
 					return .run { send in
+						try await self.clock.sleep(for: .seconds(2))
 						await send(.logic(.fetchTransactionResult(TaskResult {
 							try await self.env.fetchTransaction()
 						})))
@@ -133,8 +140,9 @@ public struct TransactionList {
 					}
 					state.transactions = .init(uniqueElements: transactions)
 					return .send(.logic(.filterByCategory))
-				case .fetchTransactionResult(.failure(let error)):
+				case .fetchTransactionResult(.failure):
 					state.isLoading = false
+					state.isErrorActive = true
 					return .none
 				}
 				
@@ -157,17 +165,26 @@ public extension TransactionList {
 		let defaultCategoryLabel: String
 		let sumLabel: String
 		let selectedLabel: String
+		let errorTitle: String
+		let errorDescription: String
+		let errorButton: String
 		
 		public init(
 			title: String,
 			defaultCategoryLabel: String,
 			sumLabel: String,
-			selectedLabel: String
+			selectedLabel: String,
+			errorTitle: String,
+			errorDescription: String,
+			errorButton: String
 		) {
 			self.title = title
 			self.defaultCategoryLabel = defaultCategoryLabel
 			self.sumLabel = sumLabel
 			self.selectedLabel = selectedLabel
+			self.errorTitle = errorTitle
+			self.errorDescription = errorDescription
+			self.errorButton = errorButton
 		}
 	}
 }
@@ -182,25 +199,38 @@ public struct TransactionListView: View {
 	public var body: some View {
 		NavigationView {
 			ScrollView {
-				ForEach(store.transactionsFiltered) { transaction in
-					NavigationLink(
-						destination: {
-							TransactionDetailView(transaction: transaction)
-						},
-						label: {
-							TransactionListItemView(transaction: transaction)
+				if store.isLoading {
+					ProgressView()
+				} else if store.isErrorActive {
+					TransactionErrorView(
+						title: store.translations.errorTitle,
+						description: store.translations.errorDescription,
+						buttonLabel: store.translations.errorButton,
+						action: {
+							store.send(.view(.errorRetryTapped))
 						}
 					)
+				} else {
+					ForEach(store.transactionsFiltered) { transaction in
+						NavigationLink(
+							destination: {
+								TransactionDetailView(transaction: transaction)
+							},
+							label: {
+								TransactionListItemView(transaction: transaction)
+							}
+						)
+					}
+					HStack {
+						Spacer()
+						Text(store.sumLabel)
+							.apply(style: .body1, color: Asset.textSecondary.swiftUIColor)
+							.padding()
+							.background(Asset.primary.swiftUIColor)
+							.cornerRadius(ViewDimension.size12.size)
+					}
+					.horizontalPadding(.size24)
 				}
-				HStack {
-					Spacer()
-					Text(store.sumLabel)
-						.apply(style: .body1, color: Asset.textSecondary.swiftUIColor)
-						.padding()
-						.background(Asset.primary.swiftUIColor)
-						.cornerRadius(ViewDimension.size12.size)
-				}
-				.horizontalPadding(.size24)
 			}
 			.onAppear {
 				store.send(.view(.onAppear))

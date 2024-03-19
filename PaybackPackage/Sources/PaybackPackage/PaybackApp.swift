@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PaybackApp.swift
 //  
 //
 //  Created by Jakub Legut on 13/03/2024.
@@ -30,7 +30,10 @@ let initialTransactionListView: TransactionList.State = .init(
 		title: L10n.transactionListTitle,
 		defaultCategoryLabel: L10n.transactionListDefaultCategory,
 		sumLabel: L10n.transactionListSum,
-		selectedLabel: L10n.transactionListSelectedLabel
+		selectedLabel: L10n.transactionListSelectedLabel,
+		errorTitle: L10n.transactionConnectionErrorTitle,
+		errorDescription: L10n.transactionConnectionErrorDescription,
+		errorButton: L10n.transactionConnectionErrorButton
 	),
 	transactions: .init(uniqueElements: [])
 )

@@ -5,7 +5,15 @@
 "init" = "init";
 
 ////////////////////////////////////////////////////////////////////////////////
+// MARK: Internet
+"internet_connection_error_description" = "Überprüfen Sie, ob Ihr Telefon mit dem Internet verbunden ist.";
+"internet_connection_error_title" = "No internet connection";
+
+////////////////////////////////////////////////////////////////////////////////
 // MARK: Transaction
+"transaction_connection_error_button" = "Wiederholen";
+"transaction_connection_error_description" = "Wir konnten die Transaktionsliste nicht herunterladen. Bitte versuchen Sie es erneut, indem Sie auf die Schaltfläche unten klicken. Wenn der Download nach mehreren Versuchen fehlschlägt, wenden Sie sich bitte an unseren Kundensupport.";
+"transaction_connection_error_title" = "Die Verbindung ist fehlgeschlagen";
 "transaction_list_default_category" = "Alle";
 "transaction_list_selected_label" = "ausgewählt";
 "transaction_list_sum" = "Summe";

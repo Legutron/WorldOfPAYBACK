@@ -5,7 +5,15 @@
 "init" = "init";
 
 ////////////////////////////////////////////////////////////////////////////////
+// MARK: Internet
+"internet_connection_error_description" = "Sprawdź czy Twój telefon jest połączony z internetem.";
+"internet_connection_error_title" = "Brak połączenia z internetem";
+
+////////////////////////////////////////////////////////////////////////////////
 // MARK: Transaction
+"transaction_connection_error_button" = "Ponów";
+"transaction_connection_error_description" = "Nie mogliśmy pobrać listy transakcji, spróbuj ponownie naciskając poniższy przycisk, jeżeli po kilku próbach nie uda się pobrać, skontaktuj się z naszym wsparciem klienta.";
+"transaction_connection_error_title" = "Połączenie nie powiodło się";
 "transaction_list_default_category" = "Wszystkie";
 "transaction_list_selected_label" = "wybrano";
 "transaction_list_sum" = "Suma";

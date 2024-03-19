@@ -20,7 +20,10 @@ public extension TransactionList.Translations {
 		title: "Transaction list",
 		defaultCategoryLabel: "All",
 		sumLabel: "Sum",
-		selectedLabel: "selected"
+		selectedLabel: "selected",
+		errorTitle: "The connection failed",
+		errorDescription: "We were unable to download the transaction list, please try again by pressing the button below, if the download fails after several attempts, please contact our customer support.",
+		errorButton: "Retry"
 	)
 }
 #endif

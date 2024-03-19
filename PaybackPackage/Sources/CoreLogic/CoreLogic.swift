@@ -17,10 +17,15 @@ public struct CoreLogic {
 extension CoreLogic: DependencyKey {
 	public static let liveValue = Self(
 		fetchTransactions: {
-			if PaybackAssembler.shared.buildType == .debugWithMock {
-				return try await fetchMockedTransactions()
+			if randomBool() {
+				print("⛔️ RANDOM ERROR GENERATED")
+				throw PBError.randomError("Random error :)")
 			} else {
-				return try await fetchApiTransactions()
+				if PaybackAssembler.shared.buildType == .debugWithMock {
+					return try await fetchMockedTransactions()
+				} else {
+					return try await fetchApiTransactions()
+				}
 			}
 		}
 	)
@@ -28,6 +33,10 @@ extension CoreLogic: DependencyKey {
 	public static let testValue = Self(
 		fetchTransactions: unimplemented("\(Self.self).fetchTransactions")
 	)
+}
+
+fileprivate func randomBool() -> Bool {
+	return arc4random_uniform(2) == 0
 }
 
 fileprivate func fetchMockedTransactions() async throws -> [TransactionAPI] {
