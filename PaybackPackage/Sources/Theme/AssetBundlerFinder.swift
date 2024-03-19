@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  
+//  AssetBundleFinder.swift
 //
-//  Created by Jakub Legut on 13/03/2024.
+//
+//  Created by Jakub Legut on 17/03/2024.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ private class AssetBundleFinder {}
 // this class is to find assets in the SPM files, it keeps preview working.
 public class AssetResources: NSObject {
 	static var swiftUIPreviewsCompatibleModule: Bundle {
-		let bundleNameIOS = "PaybackPackage_Common"
+		let bundleNameIOS = "PaybackPackage_Theme"
 		
 		let candidates = [
 			Bundle(for: AssetBundleFinder.self)

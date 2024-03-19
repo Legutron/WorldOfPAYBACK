@@ -21,14 +21,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Update Localization strings from POEditor
 
-### generate_swiftgen_code
-
-```sh
-[bundle exec] fastlane generate_swiftgen_code
-```
-
-
-
 ----
 
 

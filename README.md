@@ -1,11 +1,39 @@
 # PAYBACK Coding Challenge
-by Jakub Legut 2024
 
-## Tech Stack
-Architecture: `TCA (1.9.2)`
-UI: `SwiftUI`
-`SPM | SwiftGen | Fastlane`
-Localization: `POEditor (with fastlane integration)`
+## 👨 Author
+### Jakub Legut
+ - [LinkedIn](https://www.linkedin.com/in/jakub-legut/)
+
+## 🛠 Tech stack
+- [Xcode](https://developer.apple.com/xcode/)
+- [Swift](https://swift.org/)
+- [SwiftGen](https://github.com/SwiftGen/SwiftGen)
+- [Fastlane](https://github.com/fastlane/fastlane)
+- [ComposableArchitecture](https://github.com/pointfreeco/swift-composable-architecture)
+
+```
+                                           +-----------+                                            
+                                           |  WorldO   |                                            
+                                           +-----------+                                            
+                                                 |                                                  
+                                                 |                                                  
+                                             BioCamApp                                              
++--------------------------------------------------------------------------------------------------+
+|                                          +-----------+                                           |
+|                      +-------------------| BioCamApp |-------------------+                       |
+|                      |                   +-----------+                   |                       |
+|                      |                                                   |                       |
+|                +-----|-----+                                       +-----------+                 |
+|        +------ | CoreLogic |-------+                       +-------|    UI     |-------+         |
+|        |       +-----------+       |                       |       +-----------+       |         |
+|        |             |             |                       |             |             |         |
+|  +-----------+ +-----|-----+ +-----------+           +-----------+ +-----|-----+ +-----------+   |
+|  |  Logic A  | |  Logic B  | |  Logic C  |           | Feature A | | Feature B | | Feature C |   |
+|  +-----------+ +-----------+ +-----------+           +-----------+ +-----------+ +-----------+   |
+|                                                                                                  |
++--------------------------------------------------------------------------------------------------+
+```
+diagram source: `https://textik.com/#4b4a1a71380180ee`
 
 A new App named **WorldOfPAYBACK** is planned to be released. One of its first features involves displaying a list of transactions, and a corresponding detail screen for each.
 
@@ -13,14 +41,14 @@ A new App named **WorldOfPAYBACK** is planned to be released. One of its first f
 
 Please create a SwiftUI App based on the following User-Stories:
 
-* As a user of the App, I want to see a list of (mocked) transactions. Each item in the list displays `bookingDate`, `partnerDisplayName`, `transactionDetail.description`, `value.amount` and `value.currency`. *(see attached JSON File)*
-* As a user of the App, I want to have the list of transactions sorted by `bookingDate` from newest (top) to oldest (bottom).
+* ✅ As a user of the App, I want to see a list of (mocked) transactions. Each item in the list displays `bookingDate`, `partnerDisplayName`, `transactionDetail.description`, `value.amount` and `value.currency`. *(see attached JSON File)*
+* 🔄 As a user of the App, I want to have the list of transactions sorted by `bookingDate` from newest (top) to oldest (bottom).
 * As a user of the App, I want to get feedback when loading of the transactions is ongoing or an Error occurs. *(Just delay the mocked server response for 1-2 seconds and randomly fail it)*
 * As a user of the App, I want to see an error if the device is offline.
-* As a user of the App, I want to filter the list of transactions by `category`.
-* As a user of the App, I want to see the sum of filtered transactions somewhere on the Transaction-list view. *(Sum of `value.amount`)*
-* As a user of the App, I want to select a transaction and navigate to its details. The details-view should just display `partnerDisplayName` and `transactionDetail.description`.
-* As a user of the App, I like to see nice UI in general. However, for this coding challenge fancy UI is not required.
+* ✅ As a user of the App, I want to filter the list of transactions by `category`.
+* ✅ As a user of the App, I want to see the sum of filtered transactions somewhere on the Transaction-list view. *(Sum of `value.amount`)*
+* 🔄 As a user of the App, I want to select a transaction and navigate to its details. The details-view should just display `partnerDisplayName` and `transactionDetail.description`.
+* 🔄 As a user of the App, I like to see nice UI in general. However, for this coding challenge fancy UI is not required.
 
 ## "WorldOfPAYBACK" App - General Information
 

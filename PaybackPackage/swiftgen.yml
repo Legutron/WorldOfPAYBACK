@@ -57,13 +57,20 @@
 ## For more info, use `swiftgen config doc` to open the full documentation on GitHub.
 ## https://github.com/SwiftGen/SwiftGen/tree/6.6.3/Documentation/
 
-input_dir: PaybackPackage/Sources/Localization/Resources
-output_dir: PaybackPackage/Sources/Localization/Generated/
+input_dir: Sources/Theme/Resources
+output_dir: Sources/Theme/Generated/
 strings:
   inputs: en.lproj
   filter: .+\.strings$
   outputs:
     - templateName: structured-swift5
       output: L10n-Localization.swift
+      params:
+          publicAccess: true
+xcassets:
+  inputs: Media.xcassets
+  outputs:
+    - templateName: swift5
+      output: Assets.swift
       params:
           publicAccess: true
