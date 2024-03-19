@@ -79,6 +79,7 @@ public struct TransactionList {
 		public enum ViewAction {
 			case onAppear
 			case categoryChanged(Category)
+			case refreshTapped
 			case errorRetryTapped
 		}
 		
@@ -108,6 +109,8 @@ public struct TransactionList {
 				case .categoryChanged(let category):
 					state.selectedCategory = category
 					return .send(.logic(.filterByCategory))
+				case .refreshTapped:
+					return .send(.logic(.fetchTransaction))
 				case .errorRetryTapped:
 					return .send(.logic(.fetchTransaction))
 				}
@@ -200,7 +203,10 @@ public struct TransactionListView: View {
 		NavigationView {
 			ScrollView {
 				if store.isLoading {
-					ProgressView()
+					VStack {
+						ProgressView()
+							.tint(Asset.primary.swiftUIColor)
+					}
 				} else if store.isErrorActive {
 					TransactionErrorView(
 						title: store.translations.errorTitle,
@@ -238,13 +244,22 @@ public struct TransactionListView: View {
 			.backgroundFull(Asset.background.swiftUIColor)
 			.navigationTitle(store.translations.title)
 			.toolbar {
+				Button(
+					action: {
+						store.send(.view(.refreshTapped))
+					},
+					label: {
+						Image(systemName: "repeat.circle")
+					}
+				)
+				
 				Picker(
 					"Category",
 					selection: $store.selectedCategory.sending(\.view.categoryChanged)
 				) {
 					ForEach(store.categories, id: \.id) { item in
 						Text(item.label)
-							.apply(style: .body2, color: Asset.primary.swiftUIColor)
+							.apply(style: .body2)
 							.tag(item)
 					}
 				}
