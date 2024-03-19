@@ -30,6 +30,10 @@ let package = Package(
 			name: "TransactionFeature",
 			targets: ["TransactionFeature"]
 		),
+		.library(
+			name: "SplashFeature",
+			targets: ["SplashFeature"]
+		),
 	],
 	dependencies: [
 		.package(
@@ -48,6 +52,7 @@ let package = Package(
 				"Common",
 				"Theme",
 				"TransactionFeature",
+				"SplashFeature",
 				"CoreLogic",
 			]
 		),
@@ -106,6 +111,23 @@ let package = Package(
 			name: "TransactionFeatureTests",
 			dependencies: [
 				"TransactionFeature"
+			]
+		),
+		.target(
+			name: "SplashFeature",
+			dependencies: [
+				"Common",
+				"Theme",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.testTarget(
+			name: "SplashFeatureTests",
+			dependencies: [
+				"SplashFeature"
 			]
 		),
 	]

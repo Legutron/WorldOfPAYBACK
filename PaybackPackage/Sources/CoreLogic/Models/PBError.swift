@@ -9,4 +9,5 @@ import Foundation
 
 public enum PBError: Error {
 	case randomError(String)
+	case noConnection(String)
 }

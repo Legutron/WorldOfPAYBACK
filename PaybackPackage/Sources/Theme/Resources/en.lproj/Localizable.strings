@@ -6,8 +6,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // MARK: Internet
+"internet_connection_error_button" = "Try again";
 "internet_connection_error_description" = "Check if your phone is connected to the Internet.";
-"internet_connection_error_title" = "Keine Internetverbindung";
+"internet_connection_error_title" = "No internet connection";
 
 ////////////////////////////////////////////////////////////////////////////////
 // MARK: Transaction

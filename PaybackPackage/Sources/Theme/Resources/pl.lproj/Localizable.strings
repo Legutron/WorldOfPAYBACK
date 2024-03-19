@@ -6,6 +6,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // MARK: Internet
+"internet_connection_error_button" = "Sprawdź ponownie";
 "internet_connection_error_description" = "Sprawdź czy Twój telefon jest połączony z internetem.";
 "internet_connection_error_title" = "Brak połączenia z internetem";
 

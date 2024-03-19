@@ -8,10 +8,12 @@
 import Common
 import ComposableArchitecture
 import Foundation
+import Network
 
 // MARK: CoreLogic
 public struct CoreLogic {
 	public var fetchTransactions: @Sendable () async throws -> [TransactionAPI]
+	public var checkConnection: @Sendable () async throws -> Void
 }
 
 extension CoreLogic: DependencyKey {
@@ -27,11 +29,27 @@ extension CoreLogic: DependencyKey {
 					return try await fetchApiTransactions()
 				}
 			}
+		},
+		checkConnection: {
+			try await withCheckedThrowingContinuation { continuation in
+				let monitor = NWPathMonitor()
+				monitor.pathUpdateHandler = { path in
+					if path.status == .satisfied {
+						continuation.resume()
+					} else {
+						continuation.resume(throwing: PBError.noConnection("no internet connection"))
+					}
+					monitor.cancel()
+				}
+				let queue = DispatchQueue(label: "NetworkMonitor")
+				monitor.start(queue: queue)
+			}
 		}
 	)
 	
 	public static let testValue = Self(
-		fetchTransactions: unimplemented("\(Self.self).fetchTransactions")
+		fetchTransactions: unimplemented("\(Self.self).fetchTransactions"),
+		checkConnection: unimplemented("\(Self.self).checkConnection")
 	)
 }
 

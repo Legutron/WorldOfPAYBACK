@@ -15,6 +15,8 @@ public struct TransactionList {
 	@ObservableState
 	public struct State: Equatable {
 		let translations: TransactionList.Translations
+		let assets: Assets
+		
 		var transactions: IdentifiedArrayOf<TransactionModel>
 		var transactionsFiltered: IdentifiedArrayOf<TransactionModel>
 		
@@ -23,6 +25,7 @@ public struct TransactionList {
 		
 		var isLoading: Bool = false
 		var isErrorActive: Bool = false
+		var isAppeared: Bool = false
 		
 		var sum: Double {
 			// assuming it's the same currency
@@ -56,9 +59,11 @@ public struct TransactionList {
 		
 		public init(
 			translations: TransactionList.Translations,
+			assets: TransactionList.Assets,
 			transactions: IdentifiedArrayOf<TransactionModel>
 		) {
 			self.translations = translations
+			self.assets = assets
 			self.transactions = transactions
 			self.transactionsFiltered = transactions
 			let defaultCategory = Category(
@@ -105,6 +110,9 @@ public struct TransactionList {
 			case let .view(action):
 				switch action {
 				case .onAppear:
+					if state.isAppeared {
+						return .none
+					}
 					return .send(.logic(.fetchTransaction))
 				case .categoryChanged(let category):
 					state.selectedCategory = category
@@ -190,6 +198,16 @@ public extension TransactionList {
 			self.errorButton = errorButton
 		}
 	}
+	
+	struct Assets: Equatable {
+		let icon: String
+		
+		public init(
+			icon: String
+		) {
+			self.icon = icon
+		}
+	}
 }
 
 public struct TransactionListView: View {
@@ -200,23 +218,26 @@ public struct TransactionListView: View {
 	}
 	
 	public var body: some View {
-		NavigationView {
-			ScrollView {
-				if store.isLoading {
-					VStack {
-						ProgressView()
-							.tint(Asset.primary.swiftUIColor)
+		VStack {
+			if store.isLoading {
+				VStack {
+					Spacer()
+					ProgressView()
+						.tint(Asset.primary.swiftUIColor)
+					Spacer()
+				}
+			} else if store.isErrorActive {
+				ErrorView(
+					icon: store.assets.icon,
+					title: store.translations.errorTitle,
+					description: store.translations.errorDescription,
+					buttonLabel: store.translations.errorButton,
+					action: {
+						store.send(.view(.errorRetryTapped))
 					}
-				} else if store.isErrorActive {
-					TransactionErrorView(
-						title: store.translations.errorTitle,
-						description: store.translations.errorDescription,
-						buttonLabel: store.translations.errorButton,
-						action: {
-							store.send(.view(.errorRetryTapped))
-						}
-					)
-				} else {
+				)
+			} else {
+				ScrollView {
 					ForEach(store.transactionsFiltered) { transaction in
 						NavigationLink(
 							destination: {
@@ -230,40 +251,40 @@ public struct TransactionListView: View {
 					HStack {
 						Spacer()
 						Text(store.sumLabel)
-							.apply(style: .body1, color: Asset.textSecondary.swiftUIColor)
+							.apply(style: .body1, color: Asset.primary.swiftUIColor)
 							.padding()
-							.background(Asset.primary.swiftUIColor)
+							.background(Asset.surface.swiftUIColor)
 							.cornerRadius(ViewDimension.size12.size)
 					}
 					.horizontalPadding(.size24)
+					Spacer()
 				}
 			}
-			.onAppear {
-				store.send(.view(.onAppear))
-			}
-			.backgroundFull(Asset.background.swiftUIColor)
-			.navigationTitle(store.translations.title)
-			.toolbar {
-				Button(
-					action: {
-						store.send(.view(.refreshTapped))
-					},
-					label: {
-						Image(systemName: "repeat.circle")
-					}
-				)
-				
-				Picker(
-					"Category",
-					selection: $store.selectedCategory.sending(\.view.categoryChanged)
-				) {
-					ForEach(store.categories, id: \.id) { item in
-						Text(item.label)
-							.apply(style: .body2)
-							.tag(item)
-					}
+		}
+		.onAppear {
+			store.send(.view(.onAppear))
+		}
+		.backgroundFull(Asset.background.swiftUIColor)
+		.navigationTitle(store.translations.title)
+		.toolbar {
+			Picker(
+				"Category",
+				selection: $store.selectedCategory.sending(\.view.categoryChanged)
+			) {
+				ForEach(store.categories, id: \.id) { item in
+					Text(item.label)
+						.apply(style: .body2)
+						.tag(item)
 				}
 			}
+			Button(
+				action: {
+					store.send(.view(.refreshTapped))
+				},
+				label: {
+					Image(systemName: "repeat.circle")
+				}
+			)
 		}
 	}
 	
