@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Transaction: Equatable, Identifiable {
+public struct TransactionModel: Equatable, Identifiable {
 	public let id: String
 	let partnerName: String
 	let aliasReference: String
@@ -31,12 +31,12 @@ public struct Transaction: Equatable, Identifiable {
 
 public struct TransactionDetail: Equatable {
 	let description: String?
-	let bookingDate: Date
+	let bookingDate: Date?
 	let price: PriceValue
 	
 	public init(
 		description: String?,
-		bookingDate: Date,
+		bookingDate: Date?,
 		price: PriceValue
 	) {
 		self.description = description
@@ -46,11 +46,11 @@ public struct TransactionDetail: Equatable {
 }
 
 public struct PriceValue: Equatable {
-	let value: Int
+	let value: Double
 	let currency: String
 	
 	public init(
-		value: Int,
+		value: Double,
 		currency: String
 	) {
 		self.value = value
@@ -59,7 +59,7 @@ public struct PriceValue: Equatable {
 }
 
 #if DEBUG
-public extension Transaction {
+public extension TransactionModel {
 	static let mock1: Self = .init(
 		id: "1",
 		partnerName: "REWE Group",

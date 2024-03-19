@@ -15,25 +15,32 @@ public struct TransactionList {
 	@ObservableState
 	public struct State: Equatable {
 		let translations: TransactionList.Translations
-		let transactions: IdentifiedArrayOf<Transaction>
-		var transactionsFiltered: IdentifiedArrayOf<Transaction>
+		var transactions: IdentifiedArrayOf<TransactionModel>
+		var transactionsFiltered: IdentifiedArrayOf<TransactionModel>
 		
 		let defaultCategory: Category
 		var selectedCategory: Category
 		
-		var sum: Int {
+		var isLoading: Bool = false
+		
+		var sum: Double {
 			// assuming it's the same currency
-			let prices = transactionsFiltered.map { $0.details.price.value }
-			return prices.reduce(0, +)
+			transactionsFiltered
+				.map(\.details.price.value)
+				.reduce(0, +)
+		}
+		
+		var sumLabel: String {
+			"\(translations.sumLabel) \(sum) \(currency)"
 		}
 		
 		var currency: String {
 			transactionsFiltered.first?.details.price.currency ?? ""
 		}
 		
-		var categories: [Category] {
+		var categories: [TransactionList.Category] {
 			let categoryIDs = transactions.map { $0.category }
-			var categories: [Category] = Array(Set(categoryIDs))
+			var categories: [TransactionList.Category] = Array(Set(categoryIDs))
 				.map {
 					.init(id: $0, label: "Cat: \($0)")
 				}
@@ -48,7 +55,7 @@ public struct TransactionList {
 		
 		public init(
 			translations: TransactionList.Translations,
-			transactions: IdentifiedArrayOf<Transaction>
+			transactions: IdentifiedArrayOf<TransactionModel>
 		) {
 			self.translations = translations
 			self.transactions = transactions
@@ -64,16 +71,19 @@ public struct TransactionList {
 	
 	public enum Action {
 		case view(ViewAction)
-		case logic(logicAction)
+		case logic(LogicAction)
 		case delegate(DelegateAction)
-		case categoryChanged(Category)
 		
+		@CasePathable
 		public enum ViewAction {
 			case onAppear
+			case categoryChanged(Category)
 		}
 		
-		public enum logicAction {
+		public enum LogicAction {
 			case filterByCategory
+			case fetchTransaction
+			case fetchTransactionResult(TaskResult<[TransactionModel]>)
 		}
 		
 		public enum DelegateAction {
@@ -83,13 +93,18 @@ public struct TransactionList {
 	
 	public init() {}
 	
+	@Dependency(\.transaction) var env
+	
 	public var body: some Reducer<State, Action> {
 		Reduce { state, action in
 			switch action {
 			case let .view(action):
 				switch action {
 				case .onAppear:
-					return .none
+					return .send(.logic(.fetchTransaction))
+				case .categoryChanged(let category):
+					state.selectedCategory = category
+					return .send(.logic(.filterByCategory))
 				}
 				
 			case let .logic(action):
@@ -104,13 +119,27 @@ public struct TransactionList {
 						)
 						return .none
 					}
+				case .fetchTransaction:
+					state.isLoading = true
+					return .run { send in
+						await send(.logic(.fetchTransactionResult(TaskResult {
+							try await self.env.fetchTransaction()
+						})))
+					}
+				case .fetchTransactionResult(.success(var transactions)):
+					state.isLoading = false
+					transactions.sort {
+						($0.details.bookingDate ?? Date.distantPast) < ($1.details.bookingDate ?? Date.distantPast)
+					}
+					state.transactions = .init(uniqueElements: transactions)
+					return .send(.logic(.filterByCategory))
+				case .fetchTransactionResult(.failure(let error)):
+					state.isLoading = false
+					return .none
 				}
 				
 			case .delegate:
 				return .none
-			case .categoryChanged(let category):
-				state.selectedCategory = category
-				return .send(.logic(.filterByCategory))
 			}
 		}
 	}
@@ -153,9 +182,6 @@ public struct TransactionListView: View {
 	public var body: some View {
 		NavigationView {
 			ScrollView {
-				if !store.isDefaultCategory {
-					Text("\(store.translations.selectedLabel) \(store.selectedCategory.label)")
-				}
 				ForEach(store.transactionsFiltered) { transaction in
 					NavigationLink(
 						destination: {
@@ -168,7 +194,7 @@ public struct TransactionListView: View {
 				}
 				HStack {
 					Spacer()
-					Text("\(store.translations.sumLabel) \(store.sum) \(store.currency)")
+					Text(store.sumLabel)
 						.apply(style: .body1, color: Asset.textSecondary.swiftUIColor)
 						.padding()
 						.background(Asset.primary.swiftUIColor)
@@ -184,7 +210,7 @@ public struct TransactionListView: View {
 			.toolbar {
 				Picker(
 					"Category",
-					selection: $store.selectedCategory.sending(\.categoryChanged)
+					selection: $store.selectedCategory.sending(\.view.categoryChanged)
 				) {
 					ForEach(store.categories, id: \.id) { item in
 						Text(item.label)
@@ -198,22 +224,26 @@ public struct TransactionListView: View {
 	
 	struct TransactionListItemView: View {
 		
-		let transaction: Transaction
+		let transaction: TransactionModel
+		
+		var price: String {
+			String(format: "%.2f %@", transaction.details.price.value, transaction.details.price.currency)
+		}
 		
 		var body: some View {
 			HStack {
 				VStack(alignment: .leading) {
-					Text(transaction.details.bookingDate.prettyDate)
-						.apply(style: .normal)
+					Text(transaction.details.bookingDate?.prettyDate ?? "Date missing")
+						.apply(style: .body2, color: Asset.primary.swiftUIColor)
 					Text(transaction.partnerName)
 						.apply(style: .h2)
 					if let description = transaction.details.description {
-						Text(transaction.details.description ?? "")
+						Text(description)
 							.apply(style: .normal)
 					}
 				}
 				Spacer()
-				Text("\(transaction.details.price.value) \(transaction.details.price.currency)")
+				Text(price)
 					.apply(style: .body1, color: Asset.primary.swiftUIColor)
 				
 			}

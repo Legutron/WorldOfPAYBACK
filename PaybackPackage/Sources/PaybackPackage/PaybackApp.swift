@@ -21,6 +21,10 @@ public let liveApp = TransactionListView(
 	}
 )
 
+public func setBuildType(_ type: BuildType) {
+	PaybackAssembler.shared.setBuildType(type)
+}
+
 let initialTransactionListView: TransactionList.State = .init(
 	translations: .init(
 		title: L10n.transactionListTitle,
@@ -28,5 +32,5 @@ let initialTransactionListView: TransactionList.State = .init(
 		sumLabel: L10n.transactionListSum,
 		selectedLabel: L10n.transactionListSelectedLabel
 	),
-	transactions: .init(uniqueElements: [.mock1, .mock2, .mock3])
+	transactions: .init(uniqueElements: [])
 )

@@ -15,8 +15,8 @@ let package = Package(
 			targets: ["PaybackPackage"]
 		),
 		.library(
-			name: "TransactionFeature",
-			targets: ["TransactionFeature"]
+			name: "CoreLogic",
+			targets: ["CoreLogic"]
 		),
 		.library(
 			name: "Common",
@@ -25,6 +25,10 @@ let package = Package(
 		.library(
 			name: "Theme",
 			targets: ["Theme"]
+		),
+		.library(
+			name: "TransactionFeature",
+			targets: ["TransactionFeature"]
 		),
 	],
 	dependencies: [
@@ -43,7 +47,8 @@ let package = Package(
 			dependencies: [
 				"Common",
 				"Theme",
-				"TransactionFeature"
+				"TransactionFeature",
+				"CoreLogic",
 			]
 		),
 		.testTarget(
@@ -53,19 +58,18 @@ let package = Package(
 			]
 		),
 		.target(
-			name: "TransactionFeature",
+			name: "CoreLogic",
 			dependencies: [
 				"Common",
-				.product(
-					name: "ComposableArchitecture",
-					package: "swift-composable-architecture"
-				),
+			],
+			resources: [
+				.process("Resources"),
 			]
 		),
 		.testTarget(
-			name: "TransactionFeatureTests",
+			name: "CoreLogicTests",
 			dependencies: [
-				"TransactionFeature"
+				"CoreLogic"
 			]
 		),
 		.target(
@@ -86,6 +90,22 @@ let package = Package(
 			],
 			plugins: [
 				.plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin")
+			]
+		),
+		.target(
+			name: "TransactionFeature",
+			dependencies: [
+				"Common",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.testTarget(
+			name: "TransactionFeatureTests",
+			dependencies: [
+				"TransactionFeature"
 			]
 		),
 	]

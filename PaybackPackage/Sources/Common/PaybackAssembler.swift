@@ -10,6 +10,7 @@ import Foundation
 public class PaybackAssembler {
 	public let decoder: JSONDecoder
 	public let dateFormatter: DateFormatter
+	public var buildType: BuildType = .prod
 	
 	private init(
 		decoder: JSONDecoder,
@@ -19,8 +20,15 @@ public class PaybackAssembler {
 		self.dateFormatter = dateFormatter
 	}
 	
-	static let shared = PaybackAssembler(
+	public static let shared = PaybackAssembler(
 		decoder: .init(),
 		dateFormatter: .init()
 	)
+}
+
+public extension PaybackAssembler {
+	func setBuildType(_ type: BuildType) {
+		print("BUILD TYPE \(type)")
+		self.buildType = type
+	}
 }
