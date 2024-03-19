@@ -11,6 +11,9 @@ import ComposableArchitecture
 import TransactionFeature
 import SplashFeature
 import Theme
+import OnlineShoppingFeature
+import FeedFeature
+import SettingsFeature
 
 public let liveApp = PaybackAppView(
 	store: Store(
@@ -30,6 +33,7 @@ public struct PaybackApp {
 		var transaction: TransactionList.State
 		
 		var isSplashActive: Bool = true
+		var selectedTab: Tab = .transactions
 		
 		public init(
 			splash: Splash.State,
@@ -40,9 +44,11 @@ public struct PaybackApp {
 		}
 	}
 	
-	public enum Action {
+	public enum Action: BindableAction {
 		case splash(Splash.Action)
 		case transaction(TransactionList.Action)
+		
+		case binding(BindingAction<State>)
 	}
 	
 	public init() {}
@@ -60,6 +66,9 @@ public struct PaybackApp {
 				return .none
 			case .transaction:
 				return .none
+				
+			case .binding:
+			  return .none
 			}
 		}
 		Scope(
@@ -74,6 +83,10 @@ public struct PaybackApp {
 		) {
 			TransactionList()
 		}
+	}
+	
+	enum Tab {
+		case transactions, shopping, feed, settings
 	}
 }
 
@@ -109,12 +122,50 @@ public struct PaybackAppView: View {
 					)
 				)
 			} else {
-				TransactionListView(
-					store: store.scope(
-						state: \.transaction,
-						action: \.transaction
-					)
-				)
+				TabView(
+					selection: $store.selectedTab
+				) {
+					NavigationStack {
+						TransactionListView(
+							store: store.scope(
+								state: \.transaction,
+								action: \.transaction
+							)
+						)
+					}
+					.tabItem {
+						Image(systemName: "list.bullet")
+						Text("Transactions")
+					}
+					.tag(PaybackApp.Tab.transactions)
+					
+					NavigationStack {
+						OnlineShoppingView()
+					}
+					.tabItem {
+						Image(systemName: "cart")
+						Text("Shop")
+					}
+					.tag(PaybackApp.Tab.shopping)
+					
+					NavigationStack {
+						FeedView()
+					}
+					.tabItem {
+						Image(systemName: "magazine")
+						Text("Feed")
+					}
+					.tag(PaybackApp.Tab.feed)
+					
+					NavigationStack {
+						SettingsView()
+					}
+					.tabItem {
+						Image(systemName: "gear")
+						Text("Settings")
+					}
+					.tag(PaybackApp.Tab.feed)
+				}
 			}
 		}
 	}

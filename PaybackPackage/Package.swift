@@ -34,6 +34,18 @@ let package = Package(
 			name: "SplashFeature",
 			targets: ["SplashFeature"]
 		),
+		.library(
+			name: "FeedFeature",
+			targets: ["FeedFeature"]
+		),
+		.library(
+			name: "OnlineShoppingFeature",
+			targets: ["OnlineShoppingFeature"]
+		),
+		.library(
+			name: "SettingsFeature",
+			targets: ["SettingsFeature"]
+		),
 	],
 	dependencies: [
 		.package(
@@ -54,6 +66,9 @@ let package = Package(
 				"TransactionFeature",
 				"SplashFeature",
 				"CoreLogic",
+				"FeedFeature",
+				"OnlineShoppingFeature",
+				"SettingsFeature",
 			]
 		),
 		.testTarget(
@@ -128,6 +143,57 @@ let package = Package(
 			name: "SplashFeatureTests",
 			dependencies: [
 				"SplashFeature"
+			]
+		),
+		.target(
+			name: "FeedFeature",
+			dependencies: [
+				"Common",
+				"Theme",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.testTarget(
+			name: "FeedFeatureTests",
+			dependencies: [
+				"FeedFeature"
+			]
+		),
+		.target(
+			name: "OnlineShoppingFeature",
+			dependencies: [
+				"Common",
+				"Theme",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.testTarget(
+			name: "OnlineShoppingFeatureTests",
+			dependencies: [
+				"OnlineShoppingFeature"
+			]
+		),
+		.target(
+			name: "SettingsFeature",
+			dependencies: [
+				"Common",
+				"Theme",
+				.product(
+					name: "ComposableArchitecture",
+					package: "swift-composable-architecture"
+				),
+			]
+		),
+		.testTarget(
+			name: "SettingsFeatureTests",
+			dependencies: [
+				"SettingsFeature"
 			]
 		),
 	]

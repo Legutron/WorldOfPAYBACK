@@ -113,6 +113,7 @@ public struct TransactionList {
 					if state.isAppeared {
 						return .none
 					}
+					state.isAppeared = true
 					return .send(.logic(.fetchTransaction))
 				case .categoryChanged(let category):
 					state.selectedCategory = category
