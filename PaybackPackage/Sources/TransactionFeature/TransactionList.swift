@@ -185,7 +185,7 @@ public struct TransactionListView: View {
 				ForEach(store.transactionsFiltered) { transaction in
 					NavigationLink(
 						destination: {
-							Text("Transaction Detail will be added soon... :)")
+							TransactionDetailView(transaction: transaction)
 						},
 						label: {
 							TransactionListItemView(transaction: transaction)
