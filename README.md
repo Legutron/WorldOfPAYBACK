@@ -1,15 +1,29 @@
 # PAYBACK Coding Challenge
 
-## 👨 Author
-### Jakub Legut
+## 👨 Author: Jakub Legut
  - [LinkedIn](https://www.linkedin.com/in/jakub-legut/)
+ 
+ ## 🧾 Description:
+ The project is built on the **Composable Architecture** (TCA v1.9.2) using *Async Await*. SPM is used to properly distribute the project into modules - making it scalable and enabling collaboration among multiple individuals on a single project. The application logic and views are separated, facilitating easier management of changes. `TransactionList` is a view of transaction lists, with two icons in the top right corner: one for filtering by categories, and the other for data refresh (useful in case of random fail implementation). Additional packages have been prepared for future application functionalities (Feed, Settings...). **Tests** have also been written for the `TransactionList` (located in the `TransactionFeatureTests` file).
+ 
+ ## 💾 Scheme Descriptions:
 
-## 🛠 Tech stack
+- **Mock-WorldOfPAYBACKApp:** Utilizes hardcoded JSON as the data source.
+- **Stage-WorldOfPAYBACKApp:** Utilizes the test API [https://api-test.payback.com/transactions](https://api-test.payback.com/transactions).
+- **Prod-WorldOfPAYBACKApp:** Utilizes the production API [https://api-test.payback.com/transactions](https://api-test.payback.com/transactions).
+
+However, all versions have support for random fail.
+
+## ⚙️ Project Tech stack
 - [Xcode](https://developer.apple.com/xcode/)
 - [Swift](https://swift.org/)
 - [SwiftGen](https://github.com/SwiftGen/SwiftGen)
 - [Fastlane](https://github.com/fastlane/fastlane)
 - [ComposableArchitecture](https://github.com/pointfreeco/swift-composable-architecture)
+
+## 🛠 Project Setup
+- fetching strings command [Terminal]: `fastlane appStrings`
+- generate Localizations /PaybackPackage [Terminal]: `swiftgen config run`
 
 ```
                                                                                                                           
