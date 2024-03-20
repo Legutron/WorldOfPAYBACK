@@ -21,7 +21,6 @@ public let liveApp = PaybackAppView(
 	) {
 		PaybackApp()
 			.signpost()
-			._printChanges()
 	}
 )
 
