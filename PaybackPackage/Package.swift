@@ -7,7 +7,7 @@ let package = Package(
 	name: "PaybackPackage",
 	defaultLocalization: "en",
 	platforms: [
-		.iOS("17.0"),
+		.iOS(.v17),
 	],
 	products: [
 		.library(

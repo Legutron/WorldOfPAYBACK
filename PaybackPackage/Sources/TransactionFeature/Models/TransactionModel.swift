@@ -67,7 +67,7 @@ public extension TransactionModel {
 		category: 1,
 		details: .init(
 			description: "Punkte sammeln",
-			bookingDate: Date(),
+			bookingDate: Date(timeIntervalSince1970: 1710919689),
 			price: .init(
 				value: 123,
 				currency: "PBP"
@@ -82,7 +82,7 @@ public extension TransactionModel {
 		category: 2,
 		details: .init(
 			description: nil,
-			bookingDate: Date(),
+			bookingDate: Date(timeIntervalSince1970: 1710819589),
 			price: .init(
 				value: 1024,
 				currency: "PBP"
@@ -97,7 +97,7 @@ public extension TransactionModel {
 		category: 3,
 		details: .init(
 			description: "Punkte sammeln",
-			bookingDate: Date(),
+			bookingDate: Date(timeIntervalSince1970: 1710719389),
 			price: .init(
 				value: 24,
 				currency: "PBP"

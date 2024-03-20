@@ -25,7 +25,7 @@ public struct TransactionList {
 		
 		var isLoading: Bool = false
 		var isErrorActive: Bool = false
-		var isAppeared: Bool = false
+		var isAppeared: Bool
 		
 		var sum: Double {
 			// assuming it's the same currency
@@ -60,7 +60,8 @@ public struct TransactionList {
 		public init(
 			translations: TransactionList.Translations,
 			assets: TransactionList.Assets,
-			transactions: IdentifiedArrayOf<TransactionModel>
+			transactions: IdentifiedArrayOf<TransactionModel>,
+			isAppeared: Bool = false
 		) {
 			self.translations = translations
 			self.assets = assets
@@ -72,6 +73,7 @@ public struct TransactionList {
 			)
 			self.defaultCategory = defaultCategory
 			self.selectedCategory = defaultCategory
+			self.isAppeared = isAppeared
 		}
 	}
 	
@@ -88,6 +90,7 @@ public struct TransactionList {
 			case errorRetryTapped
 		}
 		
+		@CasePathable
 		public enum LogicAction {
 			case filterByCategory
 			case fetchTransaction
@@ -148,7 +151,7 @@ public struct TransactionList {
 				case .fetchTransactionResult(.success(var transactions)):
 					state.isLoading = false
 					transactions.sort {
-						($0.details.bookingDate ?? Date.distantPast) < ($1.details.bookingDate ?? Date.distantPast)
+						($0.details.bookingDate ?? Date.distantPast) > ($1.details.bookingDate ?? Date.distantPast)
 					}
 					state.transactions = .init(uniqueElements: transactions)
 					return .send(.logic(.filterByCategory))
