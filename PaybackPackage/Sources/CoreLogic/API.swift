@@ -35,10 +35,10 @@ public extension Api {
 	func fetchTransactions() async throws -> Data {
 		let url = URL(string: "\(BackendAPIs.currentURL)\(BackendKeys.transactions)")
 		guard let url else {
-			#warning("TO DO: Handle Error")
-			throw fatalError()
+			throw PBError.wrongURL("invalid url")
 		}
-		let request = URLRequest(url: url)
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET"
 		let (data, _) = try await URLSession.shared.data(for: request)
 		print("🛜 \(String(describing: data.prettyPrintedJSONString))")
 		return data
