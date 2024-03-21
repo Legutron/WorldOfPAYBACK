@@ -46,9 +46,9 @@ fileprivate func transformFetchTransaction() async throws -> [TransactionModel] 
 	}
 }
 
-private func transform(model: TransactionAPI) -> TransactionModel {
+private func transform(model: TransactionAPI, id: String = UUID().uuidString) -> TransactionModel {
 	TransactionModel(
-		id: UUID().uuidString,
+		id: id,
 		partnerName: model.partnerDisplayName,
 		aliasReference: model.alias.reference,
 		category: model.category,

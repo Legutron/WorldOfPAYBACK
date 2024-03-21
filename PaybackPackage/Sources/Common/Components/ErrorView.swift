@@ -36,7 +36,7 @@ public struct ErrorView: View {
 	
 	public var body: some View {
 		VStack {
-			if let icon = icon {
+			if let icon {
 				Image(systemName: icon)
 					.resizable()
 					.aspectRatio(contentMode: .fit)
